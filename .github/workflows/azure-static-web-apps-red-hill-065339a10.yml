@@ -20,6 +20,9 @@ jobs:
           submodules: true
           lfs: false
       - name: Deploy via Static Web Apps CLI
+        # Azure currently rejects deploy requests coming from GitHub-hosted runner IPs for this resource;
+        # deploy is done manually until Azure support resolves it, so this step must not fail the workflow.
+        continue-on-error: true
         run: npx --yes @azure/static-web-apps-cli deploy . --app-name Portifolio --env production --deployment-token "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_RED_HILL_065339A10 }}" --no-use-keychain
 
   close_pull_request_job:
